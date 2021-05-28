@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 
 winWidth = 1280
@@ -127,8 +128,7 @@ class Grid:
         # pygame.draw.rect(window, self.white, (10,10,10,10))
     
 
-
-snake = Snake()
+snake = Snake() #must remain outside of game loop - otherwise direction is always reset to right
 def draw_game():
     grid = Grid()
     grid.drawGrid(window)
@@ -142,7 +142,7 @@ def draw_game():
 
 run = True
 while run: 
-    pygame.time.delay(50)
+    pygame.time.delay(100)
     draw_game()
     # pygame.draw.rect(window, (), (10,10,10,10))      
     
