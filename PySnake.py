@@ -19,7 +19,7 @@ class Snake:
     white = (200,200,200)
     def __init__(self):
         self.length = 1
-        self.direction = 0
+        self.direction = self.right
 
     
     def eat(self,animal):
@@ -128,11 +128,11 @@ class Grid:
     
 
 
-
+snake = Snake()
 def draw_game():
     grid = Grid()
     grid.drawGrid(window)
-    snake = Snake()
+    
     
     snake.drawSnake(grid)
     snake.move()
