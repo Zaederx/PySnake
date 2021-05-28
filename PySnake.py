@@ -7,6 +7,7 @@ window = pygame.display.set_mode((winWidth, winHeight))
 pygame.display.set_caption("PySnake")
 
 class Snake:
+    black=(0,0,0)
     head = 0 #collumn for head of snake
     x = 0 # key for x position of snake head
     y = 1 # key for y position of snake head 
@@ -19,6 +20,10 @@ class Snake:
     
     def eat(self,animal):
         self.length += 1
+    
+    def drawSnake(self,grid):
+        for x,y in self.bodyCoordinates:
+            grid.drawRect(x*22, y*22 ,20,20, self.black)
 
     def turnSnakeHead(self,direction):
         keyPressed = pygame.key.get_pressed()
@@ -47,7 +52,6 @@ class Grid:
         self.gridHeight = 500
         # self.grid = []
         
-        
 
     def createGrid(self,x,y):
          for i in range(0,x):
@@ -67,10 +71,19 @@ class Grid:
                 self.drawRect(col, row, 20, 20, colour)
         # pygame.draw.rect(window, self.white, (10,10,10,10))
     
-    def drawSnake(self, snake):
-        for x,y in snake:
-            self.drawRect(x*22, y*22 ,20,20, self.black)
+    
 
+    def moveSnake():
+        pass
+        #right continuous
+
+        #left continuous
+
+        #down continuous
+
+        #up continuous
+
+        #move head
 
 
 
@@ -78,10 +91,11 @@ def draw_game():
     grid = Grid()
     grid.drawGrid(window)
     snake = Snake()
-    coordinates = snake.bodyCoordinates
-    grid.drawSnake(coordinates)
+    
+    snake.drawSnake(grid)
     pygame.display.flip()
     # pygame.display.update()
+
 run = True
 while run: 
     pygame.time.delay(50)
