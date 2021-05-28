@@ -7,6 +7,10 @@ window = pygame.display.set_mode((winWidth, winHeight))
 pygame.display.set_caption("PySnake")
 
 class Snake:
+    up = 1
+    down = 2
+    left = 3
+    right = 4
     black=(0,0,0)
     head = 0 #collumn for head of snake
     x = 0 # key for x position of snake head
@@ -16,6 +20,7 @@ class Snake:
     def __init__(self):
         self.length = 1
         self.width = 10
+        self.direction = self.right
 
     
     def eat(self,animal):
@@ -24,8 +29,9 @@ class Snake:
     def drawSnake(self,grid):
         for x,y in self.bodyCoordinates:
             grid.drawRect(x*22, y*22 ,20,20, self.black)
-
-    def turnSnakeHead(self,direction):
+    
+    #changes 'head' coordinate trajectory
+    def turnSnakeHead(self):
         keyPressed = pygame.key.get_pressed()
         if keyPressed[pygame.K_UP]: #TODO and not already moving upwards
             self.bodyCoordinates[self.head][self.y] -= 1; # move the head of the snake up
@@ -38,6 +44,51 @@ class Snake:
         
         if keyPressed[pygame.K_RIGHT]: #TODO and not already heading right
             self.bodyCoordinates[self.head][self.x] += 1; #turn snake head down
+    
+    def getSnakeHead(self):
+        x = self.bodyCoordinates[self.head][self.x]
+        y = self.bodyCoordinates[self.head][self.y]
+        return (x,y)
+    
+    def getDirection(self):
+        return self.direction
+
+    def setSnakeHead(self, x, y):
+        self.bodyCoordinates[self.head][self.x] = x
+        self.bodyCoordinates[self.head][self.y] = y
+
+    #places new head block at the new coordinates
+    #assumes coordinates for head have been already changed
+    def placeHead(self):
+        #get head coordinates
+        x,y = self.getSnakeHead()
+
+        #get head direction
+        if self.direction == self.right:
+            x += 1
+
+        if self.direction == self.left:
+            x -= 1
+        
+        if self.direction == self.up:
+            y -= 1
+
+        if self.direction == self.down:
+            y += 1
+
+        #insert head
+        self.bodyCoordinates.insert(0,[x,y])
+    
+    #pop tail
+    def popTail(self):
+        self.bodyCoordinates.pop()
+
+    #moves the snake a block forward in the current trajectory
+    def move(self):
+        self.placeHead()
+        self.popTail()
+        
+        
 
 class Animal:
     def __init__(self):
@@ -53,15 +104,16 @@ class Grid:
         # self.grid = []
         
 
-    def createGrid(self,x,y):
-         for i in range(0,x):
-            self.grid.append(i)
-            for j in range(0,y):
-                self.grid[i][j].append(j)
-                print(i,j)
+    # def createGrid(self,x,y):
+    #      for i in range(0,x):
+    #         self.grid.append(i)
+    #         for j in range(0,y):
+    #             self.grid[i][j].append(j)
+    #             print(i,j)
 
     def drawRect(self, x = 40, y = 40, width = 20, height = 20, colour = (200,200,200)):#width and height set to default grid height
-        rect = pygame.Rect(y, x, width, height)
+        rect = pygame.Rect(x, y, width, height) #flipping x and y flips the grid - Rect() takes y then x 
+        #see -> https://www.pygame.org/docs/ref/rect.html#pygame.Rect
         pygame.draw.rect(window, colour, rect)
     
     def drawGrid(self, window, colour=(200,200,200)):
@@ -71,19 +123,6 @@ class Grid:
                 self.drawRect(col, row, 20, 20, colour)
         # pygame.draw.rect(window, self.white, (10,10,10,10))
     
-    
-
-    def moveSnake():
-        pass
-        #right continuous
-
-        #left continuous
-
-        #down continuous
-
-        #up continuous
-
-        #move head
 
 
 
@@ -93,6 +132,7 @@ def draw_game():
     snake = Snake()
     
     snake.drawSnake(grid)
+    snake.move()
     pygame.display.flip()
     # pygame.display.update()
 
