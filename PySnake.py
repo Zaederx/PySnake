@@ -15,12 +15,11 @@ class Snake:
     head = 0 #collumn for head of snake
     x = 0 # key for x position of snake head
     y = 1 # key for y position of snake head 
-    bodyCoordinates = [[0,0],[0,1],[0,2]] #starting body coordinates
+    bodyCoordinates = [[0,0],[1,0],[2,0]] #starting body coordinates
     white = (200,200,200)
     def __init__(self):
         self.length = 1
-        self.width = 10
-        self.direction = self.right
+        self.direction = 0
 
     
     def eat(self,animal):
@@ -35,15 +34,19 @@ class Snake:
         keyPressed = pygame.key.get_pressed()
         if keyPressed[pygame.K_UP]: #TODO and not already moving upwards
             self.bodyCoordinates[self.head][self.y] -= 1; # move the head of the snake up
-        
+            self.direction = self.up
+
         if keyPressed[pygame.K_DOWN]: #TODO and not already heading downwards
             self.bodyCoordinates[self.head][self.y] += 1; #turn snake head down
+            self.direction = self.down
 
         if keyPressed[pygame.K_LEFT]: #TODO and not already heading left
-            self.bodyCoordinates[self.head][self.x] += 1; #turn snake head down
+            self.bodyCoordinates[self.head][self.x] -= 1; #turn snake head down
+            self.direction = self.left
         
         if keyPressed[pygame.K_RIGHT]: #TODO and not already heading right
             self.bodyCoordinates[self.head][self.x] += 1; #turn snake head down
+            self.direction = self.right
     
     def getSnakeHead(self):
         x = self.bodyCoordinates[self.head][self.x]
@@ -133,6 +136,7 @@ def draw_game():
     
     snake.drawSnake(grid)
     snake.move()
+    snake.turnSnakeHead()
     pygame.display.flip()
     # pygame.display.update()
 
