@@ -1,7 +1,6 @@
 import pygame
-import random
 import Snake
-
+import Animal
 from pygame import display
 pygame.init()
 steps = 22
@@ -12,17 +11,7 @@ window.fill((0,0,0))
 pygame.display.set_caption("PySnake")
 
 
-class Animal:
 
-    def __init__(self):
-        x = random.randrange(0,500,steps) #in steps of 22 to match the drawGrid range steps
-        y = random.randrange(0,500,steps)
-        self.points = 1
-        self.bodyCoordinates = (x,y)
-
-    def drawAnimal(self, grid, colour=(0,0,0)):
-        x,y = self.bodyCoordinates
-        grid.drawRect(x,y,20,20,colour)
 
 class Grid:
     white = (200,200,200)
@@ -55,7 +44,7 @@ class Grid:
 grid = Grid()
 # grid.drawGrid(window)
 snake = Snake.Snake() #must remain outside of game loop - otherwise direction is always reset to right
-animal = Animal()
+animal = Animal.Animal(steps)
 
 def draw_game():
     window.fill((0,0,0))
@@ -83,7 +72,7 @@ while run:
         print("Snake length:"+str(snake.length)
         )
         print("NEW ANIMAL")
-        animal = Animal()
+        animal = Animal.Animal(steps)
         animal.drawAnimal(grid)
         pygame.display.flip()
 
