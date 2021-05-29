@@ -7,6 +7,7 @@ steps = 22
 winWidth = 1280
 winHeight = 720
 window = pygame.display.set_mode((winWidth, winHeight))
+window.fill((0,0,0))
 pygame.display.set_caption("PySnake")
 
 class Snake:
@@ -32,26 +33,26 @@ class Snake:
     
     def drawSnake(self,grid):
         for x,y in self.bodyCoordinates:
-            grid.drawRect(x*steps, y*steps ,20,20, self.black) #in steps of 22 pixels to allow the gaps
+            grid.drawRect(x*steps, y*steps, 20, 20, self.black) #in steps of 22 pixels to allow the gaps
     
     #changes 'head' coordinate trajectory
     def turnSnakeHead(self):
         keyPressed = pygame.key.get_pressed()
         if keyPressed[pygame.K_UP]: #TODO and not already moving upwards
             self.bodyCoordinates[self.head][self.y] -= 1; # move the head of the snake up
-            # self.direction = self.up #TODO uncomment to turn off free roam mode
+            self.direction = self.up #TODO uncomment to turn off free roam mode
 
         if keyPressed[pygame.K_DOWN]: #TODO and not already heading downwards
             self.bodyCoordinates[self.head][self.y] += 1; #turn snake head down
-            # self.direction = self.down #TODO uncomment to turn off free roam mode
+            self.direction = self.down #TODO uncomment to turn off free roam mode
 
         if keyPressed[pygame.K_LEFT]: #TODO and not already heading left
             self.bodyCoordinates[self.head][self.x] -= 1; #turn snake head down
-            # self.direction = self.left #TODO uncomment to turn off free roam mode
+            self.direction = self.left #TODO uncomment to turn off free roam mode
         
         if keyPressed[pygame.K_RIGHT]: #TODO and not already heading right
             self.bodyCoordinates[self.head][self.x] += 1; #turn snake head down
-            # self.direction = self.right #TODO uncomment to turn off free roam mode
+            self.direction = self.right #TODO uncomment to turn off free roam mode
     
     def getSnakeHead(self):
         x = self.bodyCoordinates[self.head][self.x]
@@ -98,7 +99,12 @@ class Snake:
         self.placeHead()
         self.popTail(grid)
         
-        
+    def displayScore(self):
+        font = pygame.font.Font(None, 100)
+        text = font.render("Score:" + str(self.length), True, self.white)
+        textX = 800
+        textY = 50
+        window.blit(text,(textX,textY))
 
 class Animal:
 
@@ -141,23 +147,25 @@ class Grid:
         # pygame.draw.rect(window, self.white, (10,10,10,10))
     
 grid = Grid()
-grid.drawGrid(window)
+# grid.drawGrid(window)
 snake = Snake() #must remain outside of game loop - otherwise direction is always reset to right
 animal = Animal()
 
 def draw_game():
+    window.fill((0,0,0))
     grid = Grid()
     grid.drawGrid(window)
     snake.drawSnake(grid)
     snake.move(grid)
     snake.turnSnakeHead()
+    snake.displayScore()
     animal.drawAnimal(grid)
     pygame.display.flip()
-    # pygame.display.update()
+    pygame.display.update()
 
 run = True
 while run: 
-    pygame.time.delay(100)
+    pygame.time.delay(90)
     draw_game()
     # print("Just Checking")
     x,y = animal.bodyCoordinates
