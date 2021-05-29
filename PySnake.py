@@ -1,5 +1,7 @@
 import pygame
 import random
+
+from pygame import display
 pygame.init()
 
 winWidth = 1280
@@ -52,7 +54,7 @@ class Snake:
     def getSnakeHead(self):
         x = self.bodyCoordinates[self.head][self.x]
         y = self.bodyCoordinates[self.head][self.y]
-        return (x,y)
+        return x,y
     
     def getDirection(self):
         return self.direction
@@ -84,20 +86,29 @@ class Snake:
         self.bodyCoordinates.insert(0,[x,y])
     
     #pop tail
-    def popTail(self):
+    def popTail(self,grid):
+        # x,y = self.bodyCoordinates[-1]
+        # grid.drawRect(x,y,20,20,self.white)
         self.bodyCoordinates.pop()
 
     #moves the snake a block forward in the current trajectory
-    def move(self):
+    def move(self,grid):
         self.placeHead()
-        self.popTail()
+        self.popTail(grid)
         
         
 
 class Animal:
+
     def __init__(self):
-        self.points
-        
+        x = random.randrange(0,500,22)
+        y = random.randrange(0,500,22)
+        self.points = 1
+        self.bodyCoordinates = (x,y)
+
+    def drawAnimal(self, grid, colour=(0,0,0)):
+        x,y = self.bodyCoordinates
+        grid.drawRect(x,y,20,20,colour)
 
 class Grid:
     white = (200,200,200)
@@ -127,16 +138,18 @@ class Grid:
                 self.drawRect(col, row, 20, 20, colour)
         # pygame.draw.rect(window, self.white, (10,10,10,10))
     
-
+grid = Grid()
+grid.drawGrid(window)
 snake = Snake() #must remain outside of game loop - otherwise direction is always reset to right
+animal = Animal()
+
 def draw_game():
     grid = Grid()
     grid.drawGrid(window)
-    
-    
     snake.drawSnake(grid)
-    snake.move()
+    snake.move(grid)
     snake.turnSnakeHead()
+    animal.drawAnimal(grid)
     pygame.display.flip()
     # pygame.display.update()
 
@@ -144,6 +157,14 @@ run = True
 while run: 
     pygame.time.delay(100)
     draw_game()
+
+    x,y = animal.bodyCoordinates
+    sx,sy = snake.getSnakeHead()
+    if x == sx and  y == sy:
+        newAnimal = Animal()
+        newAnimal.drawAnimal(grid)
+        pygame.display.flip()
+
     # pygame.draw.rect(window, (), (10,10,10,10))      
     
 
