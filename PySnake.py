@@ -3,7 +3,7 @@ import random
 
 from pygame import display
 pygame.init()
-
+steps = 22
 winWidth = 1280
 winHeight = 720
 window = pygame.display.set_mode((winWidth, winHeight))
@@ -26,11 +26,13 @@ class Snake:
 
     
     def eat(self,animal):
-        self.length += 1
+        print("Snake eats animal")
+        self.length += animal.points
+        self.bodyCoordinates.append([-1,-1])
     
     def drawSnake(self,grid):
         for x,y in self.bodyCoordinates:
-            grid.drawRect(x*22, y*22 ,20,20, self.black)
+            grid.drawRect(x*steps, y*steps ,20,20, self.black) #in steps of 22 pixels to allow the gaps
     
     #changes 'head' coordinate trajectory
     def turnSnakeHead(self):
@@ -101,8 +103,8 @@ class Snake:
 class Animal:
 
     def __init__(self):
-        x = random.randrange(0,500,22) #in steps of 22 to match the drawGrid range steps
-        y = random.randrange(0,500,22)
+        x = random.randrange(0,500,steps) #in steps of 22 to match the drawGrid range steps
+        y = random.randrange(0,500,steps)
         self.points = 1
         self.bodyCoordinates = (x,y)
 
@@ -133,8 +135,8 @@ class Grid:
     
     def drawGrid(self, window, colour=(200,200,200)):
         # self.drawRect()
-        for col in range(0,self.gridWidth,22):
-            for row in range(0,self.gridHeight,22):
+        for col in range(0,self.gridWidth,steps):
+            for row in range(0,self.gridHeight,steps):
                 self.drawRect(col, row, 20, 20, colour)
         # pygame.draw.rect(window, self.white, (10,10,10,10))
     
@@ -157,12 +159,15 @@ run = True
 while run: 
     pygame.time.delay(100)
     draw_game()
-    print("Just Checking")
+    # print("Just Checking")
     x,y = animal.bodyCoordinates
-    print("x:",x,"y:",y)
+    # print("x:",x,"y:",y)
     sx,sy = snake.getSnakeHead()
-    print("sx:",sx,"sy:",sy)
-    if x == sx*22 and  y == sy*22 :
+    # print("sx:",sx,"sy:",sy)
+    if x == sx*steps and  y == sy*steps :
+        snake.eat(animal)
+        print("Snake length:"+str(snake.length)
+        )
         print("NEW ANIMAL")
         animal = Animal()
         animal.drawAnimal(grid)
