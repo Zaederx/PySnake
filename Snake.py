@@ -26,23 +26,30 @@ class Snake:
     
     #changes 'head' coordinate trajectory
     def turnSnakeHead(self):
+        x = self.bodyCoordinates[self.head][self.x]
+        y = self.bodyCoordinates[self.head][self.y]
         keyPressed = pygame.key.get_pressed()
         if keyPressed[pygame.K_UP]: #TODO and not already moving upwards
-            self.bodyCoordinates[self.head][self.y] -= 1; # move the head of the snake up
+            y -= 1; # move the head of the snake up
             self.direction = self.up #TODO uncomment to turn off free roam mode
 
         if keyPressed[pygame.K_DOWN]: #TODO and not already heading downwards
-            self.bodyCoordinates[self.head][self.y] += 1; #turn snake head down
+            y += 1; #turn snake head down
             self.direction = self.down #TODO uncomment to turn off free roam mode
 
         if keyPressed[pygame.K_LEFT]: #TODO and not already heading left
-            self.bodyCoordinates[self.head][self.x] -= 1; #turn snake head down
+            x -= 1; #turn snake head down
             self.direction = self.left #TODO uncomment to turn off free roam mode
         
         if keyPressed[pygame.K_RIGHT]: #TODO and not already heading right
-            self.bodyCoordinates[self.head][self.x] += 1; #turn snake head down
+            x += 1; #turn snake head down
             self.direction = self.right #TODO uncomment to turn off free roam mode
-    
+        
+        # update bodyCoordinates with changes
+        self.bodyCoordinates[self.head][self.x] = x
+        self.bodyCoordinates[self.head][self.y] = y
+
+
     def getSnakeHead(self):
         x = self.bodyCoordinates[self.head][self.x]
         y = self.bodyCoordinates[self.head][self.y]
@@ -64,15 +71,22 @@ class Snake:
         #get head direction
         if self.direction == self.right:
             x += 1
+            if x >= 23:
+                x = -1
 
         if self.direction == self.left:
             x -= 1
-        
+            if x <= -1:
+                x = 23
         if self.direction == self.up:
             y -= 1
+            if y <= -1:
+                y = 23
 
         if self.direction == self.down:
             y += 1
+            if y >= 23:
+                y = -1
 
         #insert head
         self.bodyCoordinates.insert(0,[x,y])

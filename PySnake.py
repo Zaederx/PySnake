@@ -40,7 +40,7 @@ while run:
     x,y = animal.bodyCoordinates
     # print("x:",x,"y:",y)
     sx,sy = snake.getSnakeHead()
-    # print("sx:",sx,"sy:",sy)
+    print("sx:",sx,"sy:",sy)
     if x == sx*steps and  y == sy*steps :
         snake.eat(animal)
         print("Snake length:"+str(snake.length)
