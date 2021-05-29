@@ -22,7 +22,7 @@ class Snake:
     white = (200,200,200)
     def __init__(self):
         self.length = 1
-        self.direction = self.right
+        self.direction = 0
 
     
     def eat(self,animal):
@@ -37,19 +37,19 @@ class Snake:
         keyPressed = pygame.key.get_pressed()
         if keyPressed[pygame.K_UP]: #TODO and not already moving upwards
             self.bodyCoordinates[self.head][self.y] -= 1; # move the head of the snake up
-            self.direction = self.up
+            # self.direction = self.up #TODO uncomment to turn off free roam mode
 
         if keyPressed[pygame.K_DOWN]: #TODO and not already heading downwards
             self.bodyCoordinates[self.head][self.y] += 1; #turn snake head down
-            self.direction = self.down
+            # self.direction = self.down #TODO uncomment to turn off free roam mode
 
         if keyPressed[pygame.K_LEFT]: #TODO and not already heading left
             self.bodyCoordinates[self.head][self.x] -= 1; #turn snake head down
-            self.direction = self.left
+            # self.direction = self.left #TODO uncomment to turn off free roam mode
         
         if keyPressed[pygame.K_RIGHT]: #TODO and not already heading right
             self.bodyCoordinates[self.head][self.x] += 1; #turn snake head down
-            self.direction = self.right
+            # self.direction = self.right #TODO uncomment to turn off free roam mode
     
     def getSnakeHead(self):
         x = self.bodyCoordinates[self.head][self.x]
@@ -101,7 +101,7 @@ class Snake:
 class Animal:
 
     def __init__(self):
-        x = random.randrange(0,500,22)
+        x = random.randrange(0,500,22) #in steps of 22 to match the drawGrid range steps
         y = random.randrange(0,500,22)
         self.points = 1
         self.bodyCoordinates = (x,y)
@@ -157,12 +157,15 @@ run = True
 while run: 
     pygame.time.delay(100)
     draw_game()
-
+    print("Just Checking")
     x,y = animal.bodyCoordinates
+    print("x:",x,"y:",y)
     sx,sy = snake.getSnakeHead()
-    if x == sx and  y == sy:
-        newAnimal = Animal()
-        newAnimal.drawAnimal(grid)
+    print("sx:",sx,"sy:",sy)
+    if x == sx*22 and  y == sy*22 :
+        print("NEW ANIMAL")
+        animal = Animal()
+        animal.drawAnimal(grid)
         pygame.display.flip()
 
     # pygame.draw.rect(window, (), (10,10,10,10))      
