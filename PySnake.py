@@ -37,7 +37,7 @@ def endGame(snake):
 def displayEndTitle(snake):
     font = pygame.font.Font(None, 100)
     text = font.render("Game Over! Score:" + str(snake.length), True, white)
-    textX = 800
+    textX = 550
     textY = 50
     window.blit(text,(textX,textY))
     
