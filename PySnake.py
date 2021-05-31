@@ -33,7 +33,6 @@ def isGameOver():
 def endGame(snake):
     # draw_game()
     displayEndTitle(snake)
-    pygame.display.update()
 
 def displayEndTitle(snake):
     font = pygame.font.Font(None, 100)
@@ -41,7 +40,7 @@ def displayEndTitle(snake):
     textX = 800
     textY = 50
     window.blit(text,(textX,textY))
-    pygame.display.update()
+    
 
 # check if animal should be move (happens after being eaten by snake)
 def reassignAnimalBool(animal):
@@ -62,11 +61,12 @@ def reassignAnimal(animal):
 
 
 def draw_game():
-    window.fill((0,0,0))
     grid.drawGrid(steps)
+    snake.turnSnakeHead()
     snake.drawSnake(grid,steps)
     animal.drawAnimal(grid)
-    
+    snake.displayScore(window)
+    pygame.display.update()
     
     # pygame.draw.rect(window, (), (10,10,10,10))      
 
@@ -74,24 +74,32 @@ def draw_game():
 loop = 0
 run = True
 while run:
+    window.fill((0,0,0))
     print("loop:",loop)
     pygame.time.delay(90)
-    draw_game()
+    
 
     if loop == 0 or isGameOver() == False:
         loop += 1
-        snake.turnSnakeHead()
-        snake.move()
-        snake.displayScore(window)
+        snake.move()#game doesn't end on collision if not in this order
+        
+        draw_game()
+        
+        
     else:
+        grid.drawGrid(steps)
+        snake.drawSnake(grid,steps)
+        animal.drawAnimal(grid)
         endGame(snake)
+        pygame.display.update()
     #reassign Animal if eaten
     if reassignAnimalBool(animal):
         snake.eat(animal)
         print("Snake length:"+str(snake.length))
         print("NEW ANIMAL")
         animal = reassignAnimal(animal)
-
+    
+    
     pygame.display.update()
     # Quiting the game
     for event in pygame.event.get():
