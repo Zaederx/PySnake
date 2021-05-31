@@ -2,7 +2,6 @@ import pygame
 import Grid
 import Snake
 import Animal
-from pygame import display
 pygame.init()
 
 
@@ -22,8 +21,11 @@ animal = Animal.Animal(steps)
 def isGameOver():
     #if snake head meets snake body
     sx,sy = snake.getSnakeHead();
+    print("coordinate length",len(snake.bodyCoordinates))
     for i in range(1,len(snake.bodyCoordinates)):
         if snake.bodyCoordinates[i] == [sx,sy]:
+            print("i",i)
+            print("snake body:",snake.bodyCoordinates[i], "sx,sy:",[sx,sy])
             return True
         else:
             return False
@@ -58,29 +60,31 @@ def reassignAnimal(animal):
     pygame.display.flip()
     return animal
 
+
 def draw_game():
     window.fill((0,0,0))
     grid.drawGrid(steps)
     snake.drawSnake(grid,steps)
-    snake.turnSnakeHead()
     animal.drawAnimal(grid)
     
     
-
-    if isGameOver() == False:
-        snake.move(grid)
-    else:
-        snake.displayScore(window)
-        endGame(snake)
     # pygame.draw.rect(window, (), (10,10,10,10))      
-    
 
     
-
+loop = 0
 run = True
-while run: 
+while run:
+    print("loop:",loop)
     pygame.time.delay(90)
     draw_game()
+
+    if loop == 0 or isGameOver() == False:
+        loop += 1
+        snake.turnSnakeHead()
+        snake.move()
+        snake.displayScore(window)
+    else:
+        endGame(snake)
     #reassign Animal if eaten
     if reassignAnimalBool(animal):
         snake.eat(animal)
@@ -96,5 +100,5 @@ while run:
 
 
 
-pygame.display.flip()
-pygame.display.update()
+# pygame.display.flip()
+# pygame.display.update()

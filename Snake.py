@@ -8,11 +8,11 @@ class Snake:
     head = 0 #collumn for head of snake
     x = 0 # key for x position of snake head
     y = 1 # key for y position of snake head 
-    bodyCoordinates = [[0,0],[1,0],[2,0],[3,0],[4,0]] #starting body coordinates
+    bodyCoordinates = [[2,0],[3,0],[4,0]] #starting body coordinates
     white = (200,200,200)
     def __init__(self):
         self.length = 1
-        self.direction = 0
+        self.direction = self.right
 
     
     def eat(self,animal):
@@ -81,11 +81,11 @@ class Snake:
         if self.direction == self.up:
             y -= 1
             if y <= -1:
-                y = 23
+                y = 22
 
         if self.direction == self.down:
             y += 1
-            if y >= 23:
+            if y >= 22:
                 y = -1
         
                 #stop snake movement
@@ -93,15 +93,15 @@ class Snake:
         self.bodyCoordinates.insert(0,[x,y])
     
     #pop tail
-    def popTail(self,grid):
+    def popTail(self):
         # x,y = self.bodyCoordinates[-1]
         # grid.drawRect(x,y,20,20,self.white)
         self.bodyCoordinates.pop()
 
     #moves the snake a block forward in the current trajectory
-    def move(self,grid):
+    def move(self):
         self.placeHead()
-        self.popTail(grid)
+        self.popTail()
         
     def displayScore(self, window):
         font = pygame.font.Font(None, 100)
