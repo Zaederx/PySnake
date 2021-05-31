@@ -8,7 +8,7 @@ class Snake:
     head = 0 #collumn for head of snake
     x = 0 # key for x position of snake head
     y = 1 # key for y position of snake head 
-    bodyCoordinates = [[0,0],[1,0],[2,0]] #starting body coordinates
+    bodyCoordinates = [[0,0],[1,0],[2,0],[3,0],[4,0]] #starting body coordinates
     white = (200,200,200)
     def __init__(self):
         self.length = 1
@@ -87,7 +87,8 @@ class Snake:
             y += 1
             if y >= 23:
                 y = -1
-
+        
+                #stop snake movement
         #insert head
         self.bodyCoordinates.insert(0,[x,y])
     
@@ -108,3 +109,4 @@ class Snake:
         textX = 800
         textY = 50
         window.blit(text,(textX,textY))
+        
