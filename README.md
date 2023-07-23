@@ -32,7 +32,7 @@ Make sure that you have the latest version `python` and `pip` installed on your 
 Note: From python 3.4 onwards pip is included by default
 
 ## Running the project
- Download the project code. Then `cd` to / open the project folder in terminal nad enter the command:
+ Download the project code. Then `cd` or open the project folder in terminal nad enter the command:
 ```
 pip install -r requirements.txt
 ```
