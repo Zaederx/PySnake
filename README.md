@@ -12,17 +12,38 @@
 * [Images](#images)
 * [Attribution](#attribution)
 * [Technologies](#technologies)
-* [Requirements to run the project](#requirements-to-run-the-project)
 * [Setup](#setup)
 * [Running the project](#running-the-project)
 * [Testing](#testing)
 * [Project Shortcomings](#shortcomings)
-* [Modifications](#modifications)
 * [Things learned](#things-learned)
-* [Trello Board Original Project](https://trello.com/b/e8hwRTpR/patientapp) & [Trello Board Current Project](https://trello.com/b/pI50op1x/patient-health-rewrite)
 
 ## Background
-
+I wanted to practice using python as well as wanting to make a snake game, so...I made a snake game in python...
 ## Images
+![IMG_2113](https://github.com/Zaederx/PySnake/assets/38586415/6bfe8648-2358-42fb-ae80-a4c52021bb8e)
 
 ## Technologies
+- Python
+- PyGame library
+
+## Setup
+Make sure that you have the latest version `python` and `pip` installed on your device. You can downloaad that latest python distribution at [downloads link](https://www.python.org/downloads/).
+Note: From python 3.4 onwards pip is included by default
+
+## Running the project
+ Download the project code. Then `cd` to / open the project folder in terminal nad enter the command:
+```
+pip install -r requirements.txt
+```
+Then enter
+```
+python PySnake.py
+```
+
+## Testing
+
+## Project Shortcomings
+
+## Things Learned
+
