@@ -22,3 +22,7 @@
 * [Trello Board Original Project](https://trello.com/b/e8hwRTpR/patientapp) & [Trello Board Current Project](https://trello.com/b/pI50op1x/patient-health-rewrite)
 
 ## Background
+
+## Images
+
+## Technologies
