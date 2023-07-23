@@ -42,8 +42,10 @@ python PySnake.py
 ```
 
 ## Testing
+No automated testing exist, but the app has been manually tested through use.
 
 ## Project Shortcomings
+There is no automated Testing.
 
 ## Things Learned
-
+- Learn how to use python and the pygame library to make a game. Before this project I had only use python for a Big Data course.
