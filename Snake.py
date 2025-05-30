@@ -1,4 +1,5 @@
 import pygame
+import Grid
 class Snake:
     up = 1
     down = 2
@@ -20,9 +21,12 @@ class Snake:
         self.length += animal.points
         self.bodyCoordinates.append([-1,-1])
     
-    def drawSnake(self,grid,steps):
+    def drawSnake(self,grid:Grid,steps):
         for x,y in self.bodyCoordinates:
-            grid.drawRect(x*steps, y*steps, 20, 20, self.black) #in steps of 22 pixels to allow the gaps
+            # x and y are values between 1 and 22 (grid is 500px in 22 blocks)
+            # steps / division by 22 also means that the distance or length of each square is also 22(.7)
+            #so you can approximate and use 22 as the multiplier for the coordinate
+            grid.drawRect(x*grid.steps, y*grid.steps, 20, 20, self.black) #in steps of 22 pixels to allow the gaps
     
     #changes 'head' coordinate trajectory
     def turnSnakeHead(self):

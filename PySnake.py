@@ -5,7 +5,6 @@ import Animal
 pygame.init()
 
 
-steps = 22
 winWidth = 1280
 winHeight = 720
 window = pygame.display.set_mode((winWidth, winHeight))
@@ -16,7 +15,7 @@ white = (200,200,200)
 grid = Grid.Grid(window)
 # grid.drawGrid(window)
 snake = Snake.Snake() #must remain outside of game loop - otherwise direction is always reset to right
-animal = Animal.Animal(steps)
+animal = Animal.Animal(grid.steps)
 
 def isGameOver():
     #if snake head meets snake body
@@ -49,21 +48,22 @@ def reassignAnimalBool(animal):
     # print("x:",x,"y:",y)
     sx,sy = snake.getSnakeHead()
     print("sx:",sx,"sy:",sy)
-    if x == sx*steps and  y == sy*steps :
+    # snake-x (sx) * steps because that equates to how many squares you move across (on a 500px/22px = 22.7 GRID, so I'll just approxitamte and use the steps variables which is 22)
+    if x == sx*grid.steps and  y == sy*grid.steps : 
         return True
 
 # reassign the animal
 def reassignAnimal(animal):
-    animal = Animal.Animal(steps)
+    animal = Animal.Animal(grid.steps)
     animal.drawAnimal(grid)
     pygame.display.flip()
     return animal
 
 
 def draw_game():
-    grid.drawGrid(steps)
+    grid.drawGrid(grid.steps)
     snake.turnSnakeHead()
-    snake.drawSnake(grid,steps)
+    snake.drawSnake(grid,grid.steps)
     animal.drawAnimal(grid)
     snake.displayScore(window)
     pygame.display.update()
@@ -87,8 +87,8 @@ while run:
         
         
     else:
-        grid.drawGrid(steps)
-        snake.drawSnake(grid,steps)
+        grid.drawGrid(grid.steps)
+        snake.drawSnake(grid,grid.steps)
         animal.drawAnimal(grid)
         endGame(snake)
         pygame.display.update()
