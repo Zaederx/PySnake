@@ -85,11 +85,11 @@ class Snake:
         if self.direction == self.up:
             y -= 1
             if y <= -1:
-                y = 22
+                y = 23
 
         if self.direction == self.down:
             y += 1
-            if y >= 22:
+            if y >= 23:
                 y = -1
         
                 #stop snake movement
