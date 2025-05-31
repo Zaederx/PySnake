@@ -18,10 +18,10 @@ class Snake:
     
     def eat(self,animal):
         print("Snake eats animal")
-        self.length += animal.points
+        self.length += animal.points #one point per animal (score == length)
         self.bodyCoordinates.append([-1,-1])
     
-    def drawSnake(self,grid:Grid,steps):
+    def drawSnake(self,grid:Grid):
         for x,y in self.bodyCoordinates:
             # x and y are values between 1 and 22 (grid is 500px in 22 blocks)
             # steps / division by 22 also means that the distance or length of each square is also 22(.7)
@@ -33,21 +33,21 @@ class Snake:
         x = self.bodyCoordinates[self.head][self.x]
         y = self.bodyCoordinates[self.head][self.y]
         keyPressed = pygame.key.get_pressed()
-        if keyPressed[pygame.K_UP]: #TODO and not already moving upwards
+        if keyPressed[pygame.K_UP] and (self.direction != self.up):
             y -= 1; # move the head of the snake up
-            self.direction = self.up #TODO uncomment to turn off free roam mode
+            self.direction = self.up 
 
-        if keyPressed[pygame.K_DOWN]: #TODO and not already heading downwards
+        if keyPressed[pygame.K_DOWN] and (self.direction != self.down): 
             y += 1; #turn snake head down
-            self.direction = self.down #TODO uncomment to turn off free roam mode
+            self.direction = self.down 
 
-        if keyPressed[pygame.K_LEFT]: #TODO and not already heading left
+        if keyPressed[pygame.K_LEFT] and (self.direction != self.left): 
             x -= 1; #turn snake head down
-            self.direction = self.left #TODO uncomment to turn off free roam mode
+            self.direction = self.left 
         
-        if keyPressed[pygame.K_RIGHT]: #TODO and not already heading right
+        if keyPressed[pygame.K_RIGHT] and (self.direction != self.right): 
             x += 1; #turn snake head down
-            self.direction = self.right #TODO uncomment to turn off free roam mode
+            self.direction = self.right 
         
         # update bodyCoordinates with changes
         self.bodyCoordinates[self.head][self.x] = x
@@ -74,32 +74,38 @@ class Snake:
 
         #get head direction
         if self.direction == self.right:
+            # move right
             x += 1
+            # if you go to far right - come back thorugh left of screen
             if x >= 23:
-                x = -1
+                x = 0
 
         if self.direction == self.left:
+            # move left
             x -= 1
-            if x <= -1:
+            # if you go to far left - come out from right side of the screen
+            if x < 0:
                 x = 23
         if self.direction == self.up:
+            # move up
             y -= 1
-            if y <= -1:
+            # if you got to far up - come out from bottom of the screen
+            if y <= 0:
                 y = 23
 
         if self.direction == self.down:
+            # move down
             y += 1
+            # if you move to far down - come out from the top of the screen
             if y >= 23:
-                y = -1
+                y = 0
         
                 #stop snake movement
-        #insert head
+        #insert head at front of array of body coordinates
         self.bodyCoordinates.insert(0,[x,y])
     
     #pop tail
     def popTail(self):
-        # x,y = self.bodyCoordinates[-1]
-        # grid.drawRect(x,y,20,20,self.white)
         self.bodyCoordinates.pop()
 
     #moves the snake a block forward in the current trajectory
